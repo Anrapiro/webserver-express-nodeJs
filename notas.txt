@@ -272,4 +272,44 @@ diferentes lenguajes entre ellas NoteJS
 
 ========= Heroku trabaja en base a git por lo cual recibe las mismas configuración que apliquemos ======
 
-    ----- creamos el archivo .gitignore, para ignorar archivos a subir al repositorio
+    ----- creamos el archivo .gitignore, para ignorar archivos a subir al repositorio -------
+
+        node_modules/
+
+    ---------------------- Comandos git ---------------------------
+
+        $ git init
+
+        $ git status
+
+        $ git add .
+
+        $ git status
+
+        $ git commit -m "Primer commit"
+
+    ---------------------------- Subir repositorio a HEROKU ------------------------------
+
+--- inicie sesión en su cuenta de Heroku y siga las instrucciones para crear una nueva clave pública SSH ----
+
+        $ heroku login
+
+    ------------ Inicializar un repositorio de git en un directorio nuevo o existente -----------
+
+        $ cd my-project/
+
+        $ git init
+
+        $ heroku git:remote -a my-project
+
+    --------------- Envíe su código al repositorio e impleméntelo en Heroku usando Git. ----------
+
+        $ git add .
+
+        $ git commit -am "make it better"
+
+        $ git push heroku master
+
+        ---------------------- Abrir enlace creado -------------------------------
+
+            $ heroku open
