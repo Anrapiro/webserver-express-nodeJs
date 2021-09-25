@@ -1,0 +1,275 @@
+======================== HTTP ================================
+Http es un paquete que nos permite crear rapidamente un webServer
+
+  importar http
+
+    require('http');
+
+    http.createServer( (req, res) => {
+        // sitio web en formato Json
+        res.writeHead(200, {'Content-type': 'application/json'});
+        const data = {
+            nombre: 'Antony',
+            edad: 24,
+            url: req.url
+        }
+        // Respuesta en formato .json
+        res.write(JSON.stringify(data))
+        //res.write('Hola mundo');
+        // finalizar la respuesta del servidor
+        res.end();
+    }).listen(8080);
+
+=================================== EXPRESS ========================================
+---------- Marco web minimalista, rápido y sin supervisión para nodo. ---------
+---- Instalación -----
+
+    npm install express
+
+----- Import -----
+
+    const express = require('express');
+
+----- use --------
+
+    const app = express()
+
+    app.get('/', function (req, res) {
+      res.send('Hello World')
+    })
+
+    app.listen(3000)
+
+=========================== Utilización del middleware ====================================
+Express es una infraestructura web de direccionamiento y middleware que tiene una
+funcionalidad mínima propia: una aplicación Express es fundamentalmente una serie
+de llamadas a funciones de middleware.
+
+Las funciones de middleware son funciones que tienen acceso al objeto de solicitud (req - request),
+ al objeto de respuesta (res - response) y a la siguiente función de middleware en el ciclo de
+ solicitud/respuestas de la aplicación.
+
+----------------------- express.static(root, [options]) -------------------------------------
+La única función de middleware incorporado en Express es express.static.
+Esta función se basa en serve-static y es responsable del servicio de activos estáticos
+de una aplicación Express.
+
+El argumento root especifica el directorio raíz desde el que se realiza el servicio
+ de activos estáticos.
+
+        var options = {
+          dotfiles: 'ignore',
+          etag: false,
+          extensions: ['htm', 'html'],
+          index: false,
+          maxAge: '1d',
+          redirect: false,
+          setHeaders: function (res, path, stat) {
+            res.set('x-timestamp', Date.now());
+          }
+        }
+
+        app.use(express.static('public', options));
+
+        Puede tener más de un directorio estático para cada aplicación:
+
+
+        app.use(express.static('public'));
+        app.use(express.static('uploads'));
+        app.use(express.static('files'));
+
+------------------------------------ EJEMPLO --------------------------------
+    app.use( express.static( __dirname + '/public' ) );
+
+=============================== BOOTSTRAP ===========================================
+    ------
+        Bootstrap es una biblioteca multiplataforma o conjunto de herramientas de
+        código abierto para diseño de sitios y aplicaciones web.
+    -------
+    -------------------------------- DESCARGAR --------------------------------
+
+        https://github.com/twbs/bootstrap/releases/download/v5.1.1/bootstrap-5.1.1-dist.zip
+
+    ------------- INSTALAR CMD ----------------------
+
+        npm install bootstrap
+
+        npm install bootstrap --save
+
+
+================================= Handlebars - Bigotes ===========================================
+
+    Generar salida en HTML no es que sea lo más normal en las aplicaciones NodeJS, pero
+    siempre hay momentos en los que necesitas producir un pedazo de código en formato HTML
+    y para lo cual es suele ser mucho mejor trabajar mediante un sistema de templates.
+
+    Los motivos por los que usar un sistema de plantillas son varios. Lo fundamental es
+     separar el código por responsabilidades, lo que derivará en la producción de un
+      código más mantenible. También es recomendable porque te resultará mucho más
+      fácil escribir el código de la salida de tus aplicaciones. Además, Handlebars no
+      sirve exclusivamente para producir código HTML, por lo que te valdrá para cualquier
+       otra salida de texto en general.
+
+    Existen diversos motores de plantillas que podrías usar en Node, pero me gusta
+    Handlebars por su sencillez. No tienes necesidad de usar otro lenguaje, como ocurre
+    con Jade, y eso lo veo una ventaja, sobre todo cuando quieres hacer un código limpio
+    y de calidad, pero no quieres invertir tiempo en aprender nada nuevo.
+
+    ------------------------------------ Mustache-compatible -------------------------------
+    Manillar es ampliamente compatible con las plantillas Moustache. En la mayoría de los casos,
+     es posible cambiar Moustache por Handlebars y continuar usando sus plantillas actuales.
+
+   ------------------------- Fast execution - Ejecución rápida -----------------------------
+    Handlebars compila plantillas en funciones de JavaScript. Esto hace que la ejecución de la
+    plantilla sea más rápida que la mayoría de los otros motores de plantilla.
+
+
+    ------------------------------   INSTALACIÓN   ----------------------------------------
+
+        npm i handlebars
+
+    ------------------------------  USO ----------------------------------
+
+        var source = "<p>Hello, my name is {{name}}. I am from {{hometown}}. I have " +
+                     "{{kids.length}} kids:</p>" +
+                     "<ul>{{#kids}}<li>{{name}} is {{age}}</li>{{/kids}}</ul>";
+        var template = Handlebars.compile(source);
+
+        var data = { "name": "Alan", "hometown": "Somewhere, TX",
+                     "kids": [{"name": "Jimmy", "age": "12"}, {"name": "Sally", "age": "4"}]};
+        var result = template(data);
+
+        <p> {{firstname}} {{age}} </p>
+
+        ======================= HBS (Motor de plantilla) ===============================
+        Express.js view engine for handlebars.js
+        Motor de visualización Express.js para handlebars.js
+
+                --------------------- INSTALL ----------------------------
+
+                npm install hbs --save
+
+                ----------------------- USE ------------------------------
+
+                El uso de hbs como motor de visualización predeterminado requiere solo una línea
+                de código en la configuración de su aplicación. Esto renderizará .hbs archivos
+                cuando res.render se llame.
+
+                app.set ( 'view engine', 'hbs' );
+
+                Para usar una extensión diferente (es decir, html) para sus archivos de plantilla:
+
+                app.set ( 'view engine' ,  'html' ) ;
+                app.engine ( 'html', require( 'hbs' ).__express ) ;
+
+                --------------------- handlebars -----------------------
+
+                Se puede acceder a los manillares requeridos por hbs a través de la
+                handlebarspropiedad en el hbsmódulo.
+
+                // hbs.handlebars is the handlebars module
+                hbs.handlebars === require('handlebars');
+
+                ------------------- Renderizar ------------------
+
+                    app.set('view engine', 'hbs');
+
+                    app.get('/', (req, res) => {
+                        // Renderiza el archivo home.hbs
+                        res.render('home');
+                    });
+
+                    app.get('/', (req, res) => {
+                        // Renderiza el archivo home.hbs
+                        res.render('home', {
+                            nombre: 'Antony',
+                            year: new Date().getFullYear()
+                        });
+                    });
+
+                    <p> {{nombre}} - {{year}} </p>
+
+==========================================================================================
+============================== USO PARCIALES CON HBS =============================================
+
+    npm install hbs --save
+    app.set('view engine', 'hbs');
+
+    -------------------------- Helpers and Partials ---------------------------------
+       hbs expone el método registerHelper y registerPartial del manillar.
+
+        var hbs = require('hbs');
+
+        hbs.registerHelper('helper_name', function (options) { return 'helper value'; });
+        hbs.registerPartial('partial_name', 'partial value');
+
+
+
+      ******  Para mayor comodidad, registerPartials proporciona una forma rápida de cargar
+       todos los parciales desde un directorio específico:  ********
+
+       var hbs = require('hbs');
+
+       hbs.registerPartials( __dirname + '/views/partials', function (err) {});
+
+       ======================== CREAR PARCIAL ========================
+
+        hbs.registerPartials( __dirname + '/views/partials' );
+
+       ====================== USO DE PARCIALES =======================
+
+            {{> navbar}}
+
+       ------------------- leer los archivos -----------------
+
+        $ nodemon server -e js,hbs,html,css
+
+
+
+==============================  HELPERS  ====================================
+
+    Es una función que se dispara cuando el template lo requiere
+
+    hbs.registerHelper('getYear', () => {
+        return new Date.getFullYear();
+     });
+
+    -------------------------- USO HELPERS -----------------------------
+
+        {{ getYear }}
+
+
+    ========================= HEROKU ================================
+Heroku es un servidor en la nube que nos permite desplegar a producción aplicaciones en
+diferentes lenguajes entre ellas NoteJS
+
+    $ heroku -v
+
+
+    ==================== OBTENER EL PUERTO DE HEROKU =====================
+
+    const port = process.env.PORT || 3000;
+
+    ------ para decirle a heroku que comando ejecutar debemos modificar package.json -------
+
+        ----- En el objeto scripts, creamos el elemento start -----------------------
+
+            start: 'node server.js'
+
+        ---------- para probar el comando ejecutamos el comando ---------------------
+
+            ------ este es el comando que heroku va a ejecutar para montar nuestra app -------
+
+            $ npm start
+
+        --- podemos crear otros comandos personalizados en package.json por ejemplo ---
+
+            nodemon: 'nodemon server.js'
+
+            ----- para ejecutar el comando personalizado en los comandos digitamos -------
+
+            $ npm run nodemon
+
+========= Heroku trabaja en base a git por lo cual recibe las mismas configuración que apliquemos ======
+
+    ----- creamos el archivo .gitignore, para ignorar archivos a subir al repositorio
