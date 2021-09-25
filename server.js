@@ -6,7 +6,7 @@ const app = express();
 const hbs = require('hbs');
 // Importar helpers
 require('./hbs/helpers');
-
+// Obtenemos el puerto por medio de una peticion o lo asignamos nosotros
 const port = process.env.PORT || 3000;
 
 // middleware Es una instrucción o un callback que se va a ejecutar siempre
